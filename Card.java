@@ -4,7 +4,7 @@ public class Card {
     }
 
     public enum Symbol {
-        STAR, MOON, KEY, DOOR, NIGHTMARE
+        SUN, MOON, KEY, DOOR, NIGHTMARE
     }
 
     private final Color color;
