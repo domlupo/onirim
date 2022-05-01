@@ -1,10 +1,10 @@
 public class Card {
     public enum Color {
-        RED, BLUE, GREEN, TAN
+        RED, BLUE, GREEN, BROWN 
     }
 
     public enum Symbol {
-        STAR, MOON, KEY, DOOR
+        STAR, MOON, KEY, DOOR, NIGHTMARE
     }
 
     private final Color color;
