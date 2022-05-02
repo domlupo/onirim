@@ -3,17 +3,11 @@ class Main {
     {
         Deck deck = new Deck();
 
-        System.out.println(deck);
         System.out.println(deck.getDeck().size());
-        System.out.println("");
 
-        deck.shuffle();
-        System.out.println(deck);
-        System.out.println(deck.getDeck().size());
-        System.out.println("");
+        Hand hand = new Hand(deck);
 
-        deck.getDeck().remove(0);
-        System.out.println(deck);
+        System.out.println(hand);
         System.out.println(deck.getDeck().size());
    }
 }

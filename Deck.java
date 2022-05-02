@@ -60,7 +60,7 @@ public class Deck {
         Collections.shuffle(deck);
     }
 
-    public ArrayList getDeck() {
+    public ArrayList<Card> getDeck() {
         return deck;
     }
 
