@@ -4,7 +4,7 @@ public class Labyrinth {
 
     private ArrayList<Card> labyrinth = new ArrayList<Card>();
 
-    public ArrayList getLabyrinth() {
+    public ArrayList<Card> getLabyrinth() {
         return labyrinth;
     }
 
