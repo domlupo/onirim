@@ -2,6 +2,9 @@ class Main {
     public static void main(String[] args)
     {
         Deck deck = new Deck();
+        Table table = new Table();
+
+        System.out.println(table);
 
         System.out.println(deck.getDeck().size());
 
