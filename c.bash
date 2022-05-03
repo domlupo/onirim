@@ -1,2 +1,2 @@
-javac Main.java Card.java Deck.java Hand.java Table.java
+javac Main.java Card.java Deck.java Hand.java Labyrinth.java
 java Main

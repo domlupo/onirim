@@ -2,9 +2,9 @@ class Main {
     public static void main(String[] args)
     {
         Deck deck = new Deck();
-        Table table = new Table();
+        Labyrinth labyrinth = new Labyrinth();
 
-        System.out.println(table);
+        System.out.println(labyrinth);
 
         System.out.println(deck.getDeck().size());
 
