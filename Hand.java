@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.stream.*;
 
 public class Hand {
     private int CARDS_IN_HAND = 5;
@@ -27,6 +28,28 @@ public class Hand {
 
     public String toString() {
         return hand.toString();
+    }
+
+    public void addCard(Card card) {
+        hand.add(card);
+    }
+
+    public void removeCard(Card.Color color, Card.Symbol symbol) {
+        for (int i = 0; i < hand.size(); i++) {
+            if (hand.get(i).getColor().equals(color)
+                && hand.get(i).getSymbol().equals(symbol)) {
+
+                hand.remove(i);
+                break;
+            }
+        }
+
+        // TODO throw exception
+    }
+
+    public boolean hasCard(Card.Color color, Card.Symbol symbol) {
+        return hand.stream().anyMatch(card -> 
+                card.getColor().equals(color) && card.getSymbol().equals(symbol));
     }
 
     private boolean validStartingCard(Card card) {

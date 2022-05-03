@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 public class Deck {
@@ -70,5 +71,13 @@ public class Deck {
 
     public void shuffle() {
         Collections.shuffle(deck);
+    }
+
+    public Optional<Card> drawCard() {
+        if (deck.size() > 0) {
+            return Optional.of(deck.remove(0));
+       }
+
+       return Optional.empty();
     }
 }
