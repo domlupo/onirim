@@ -49,10 +49,8 @@ class Main {
        // place in labyrinth
    }
 
-   private boolean validDiscardCard(Card.Color color, Card.Symbol symbol) {
-       // check if card is in hand
-       
-       return true;
+   private boolean validDiscardCard(Card.Color color, Card.Symbol symbol, Hand hand) {
+       return hand.hasCard(color, symbol);
    }
 
    private void discardCard(Card.Color color, Card.Symbol symbol) {
