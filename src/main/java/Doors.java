@@ -11,26 +11,45 @@ public class Doors {
         this.doors = doors;
     }
 
-    public void addDoor(Card door) {
-        if (door.getSymbol() != Card.Symbol.DOOR) {
-            // TODO throw exception
+    public ArrayList getDoors() {
+        return doors;
+    }
+
+    public void addDoor(Card card) throws OnirimException {
+        if (card.getSymbol() != Card.Symbol.DOOR) {
+            throw new OnirimException("Could not add door because card is a " + card.getSymbol() + " symbol.");
         }
 
+        int doorsWithMatchingColor = getDoorsWithMatchingColor(card.getColor());
+
+        if (doorsWithMatchingColor >= Deck.DOORS_PER_COLOR) {
+            throw new OnirimException("Could not add door because " + Deck.DOORS_PER_COLOR + " " + card.getColor()
+                    + " doors are already completed.");
+        }
+
+        doors.add(card);
+    }
+
+    public boolean doorsComplete() {
+        for (Card.Color color : Card.Color.values()) {
+            int doorsWithMatchingColor = getDoorsWithMatchingColor(color);
+
+            if (doorsWithMatchingColor != 2) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private int getDoorsWithMatchingColor(Card.Color color) {
         int doorsWithMatchingColor = 0;
         for (int i = 0; i < doors.size(); i++) {
-            if (door.getColor() == doors.get(i).getColor()) {
+            if (color == doors.get(i).getColor()) {
                 doorsWithMatchingColor +=1;
             }
         }
 
-        if (doorsWithMatchingColor >= Deck.DOORS_PER_COLOR) {
-            // TODO throw exception
-        }
-
-        doors.add(door);
-    }
-
-    public void doorsComplete() {
-        // TODO
+        return doorsWithMatchingColor;
     }
 }
