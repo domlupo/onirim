@@ -17,29 +17,15 @@ class Main {
        // throw exception
    }
 
-   private boolean validPlayCard(Card.Color color, Card.Symbol symbol) {
-       // check if card is in hand
-       
-       // check if card is playable in labyrinth
-       
-       return true;
-   }
-
    private void playCard(Card.Color color, Card.Symbol symbol) {
-      
-       // remove card from hand
-       
-       // place in labyrinth
+        // try to remove card
+
+       // try to play card
+       // if play card fails add card back to hand
    }
 
-   private void  discardCard(Card.Color color, Card.Symbol symbol, Hand hand) throws OnirimException {
+   private void discardCard(Card.Color color, Card.Symbol symbol, Hand hand) throws OnirimException {
        hand.removeCard(color, symbol);
-   }
-
-   private void discardCard(Card.Color color, Card.Symbol symbol) {
-       // remove card from hand
-       
-       // if card is key, perform special actions
    }
 
 }
