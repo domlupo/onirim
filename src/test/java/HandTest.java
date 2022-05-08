@@ -1,4 +1,3 @@
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -9,25 +8,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class HandTest {
     @Nested
     class addCard {
-        Hand hand;
-        Card cardOne;
-        Card cardTwo;
-
-        @BeforeEach
-        void beforeEach() {
-            hand = new Hand();
-            cardOne = new Card.Builder()
+        @Test
+        void addOneCard() throws OnirimException {
+            Hand hand = new Hand();
+            Card cardOne = new Card.Builder()
                     .setColor(Card.Color.RED)
                     .setSymbol(Card.Symbol.SUN)
                     .build();
-            cardTwo = new Card.Builder()
-                    .setColor(Card.Color.BLUE)
-                    .setSymbol(Card.Symbol.SUN)
-                    .build();
-        }
 
-        @Test
-        void addOneCard() {
             assertTrue(hand.getHand().size() == 0);
             hand.addCard(cardOne);
             assertTrue(hand.getHand().size() == 1);
@@ -35,13 +23,50 @@ class HandTest {
         }
 
         @Test
-        void addTwoCards() {
+        void addTwoCards() throws OnirimException {
+            Hand hand = new Hand();
+            Card cardOne = new Card.Builder()
+                    .setColor(Card.Color.RED)
+                    .setSymbol(Card.Symbol.SUN)
+                    .build();
+            Card cardTwo = new Card.Builder()
+                    .setColor(Card.Color.BLUE)
+                    .setSymbol(Card.Symbol.SUN)
+                    .build();
+
             assertTrue(hand.getHand().size() == 0);
             hand.addCard(cardOne);
             hand.addCard(cardTwo);
             assertTrue(hand.getHand().size() == 2);
             assertTrue(hand.getHand().contains(cardOne));
             assertTrue(hand.getHand().contains(cardTwo));
+        }
+
+        @Test
+        void addCardException() {
+            Card.Color color = Card.Color.RED;
+            Card.Symbol symbol = Card.Symbol.SUN;
+            ArrayList<Card> maxCardsInHand = new ArrayList<>();
+
+            Card.Builder cardBuilder = Card.Builder.newInstance()
+                    .setColor(color)
+                    .setSymbol(symbol);
+            IntStream.range(0, Hand.MAX_CARDS_IN_HAND).forEach(i ->
+                    maxCardsInHand.add(cardBuilder.build()));
+
+            Hand hand = new Hand(maxCardsInHand);
+
+            assertTrue(hand.getHand().size() == Hand.MAX_CARDS_IN_HAND);
+            OnirimException thrown = assertThrows(
+                    OnirimException.class,
+                    () -> hand.addCard(cardBuilder.build()),
+                    "Expected addCard(card) to throw, but it didn't"
+            );
+
+            assertTrue(thrown.getMessage().contains("Could not add card with color " + color + " and symbol "
+                    + symbol + " to hand because there is already "
+                    + Hand.MAX_CARDS_IN_HAND + " cards in hand."));
+            assertTrue(hand.getHand().size() == Hand.MAX_CARDS_IN_HAND);
         }
     }
 

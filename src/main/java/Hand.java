@@ -3,6 +3,7 @@ import java.util.Random;
 
 public class Hand {
     public static int STARTING_CARDS_IN_HAND = 5;
+    public static int MAX_CARDS_IN_HAND = 5;
 
     private ArrayList<Card> hand;
     private Random random = new Random();
@@ -54,7 +55,13 @@ public class Hand {
         return hand.toString();
     }
 
-    public void addCard(Card card) {
+    public void addCard(Card card) throws OnirimException {
+        if (hand.size() == Hand.MAX_CARDS_IN_HAND) {
+            throw new OnirimException("Could not add card with color " + card.getColor()+ " and symbol "
+                    + card.getSymbol() + " to hand because there is already "
+                    + Hand.MAX_CARDS_IN_HAND + " cards in hand.");
+        }
+
         hand.add(card);
     }
 

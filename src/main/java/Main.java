@@ -2,7 +2,7 @@ class Main {
     public static void main(String[] args)
     { }
 
-   private void handleDrawnCard(Card card, Hand hand) {
+   private void handleDrawnCard(Card card, Hand hand) throws OnirimException {
        if (card.getSymbol() == Card.Symbol.SUN 
            || card.getSymbol() == Card.Symbol.MOON
            || card.getSymbol() == Card.Symbol.KEY) {
