@@ -24,7 +24,7 @@ class LabyrinthTest {
         }
 
         @Test
-        void playValidCardWithDifferentSymbol() throws OnirimException {
+        void playCardWithDifferentSymbol() throws OnirimException {
             Card.Color color = Card.Color.RED;
             Card.Symbol playCardSymbol = Card.Symbol.SUN;
             Card.Symbol labyrinthCardSymbol = Card.Symbol.MOON;
@@ -49,7 +49,7 @@ class LabyrinthTest {
         }
 
         @Test
-        void playInvalidCardWithMatchingSymbol() {
+        void playCardWithMatchingSymbolException() {
             Card.Color color = Card.Color.RED;
             Card.Symbol matchingSymbol = Card.Symbol.SUN;
 
@@ -82,7 +82,7 @@ class LabyrinthTest {
 
         @ParameterizedTest
         @EnumSource(value = Card.Symbol.class, names = {"DOOR", "NIGHTMARE"})
-        void playInvalidCardWithMatchingSymbol(Card.Symbol symbol) {
+        void playCardWithMatchingSymbolException(Card.Symbol symbol) {
             Card playCard = new Card.Builder()
                     .setSymbol(symbol)
                     .build();
