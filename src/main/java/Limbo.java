@@ -2,7 +2,7 @@ import java.util.ArrayDeque;
 
 public class Limbo {
 
-    private ArrayDeque<Card> limbo = new ArrayDeque<Card>();
+    private ArrayDeque<Card> limbo = new ArrayDeque<>();
 
     public ArrayDeque<Card> getLimbo() {
         return limbo;

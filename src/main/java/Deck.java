@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 
 public class Deck {
     private final int NIGHTMARE_CARDS = 10;
-    private final int LABRINTH_CARDS = 58;
+    private final int LABYRINTH_CARDS = 58;
     private final int DOOR_CARDS = 8;
 
     private final int MOONS_PER_COLOR = 4;

@@ -1,11 +1,10 @@
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.stream.*;
 
 public class Hand {
     private int CARDS_IN_HAND = 5;
 
-    private ArrayList<Card> hand = new ArrayList<Card>();
+    private ArrayList<Card> hand = new ArrayList<>();
     private Random random = new Random();
 
     public Hand (Deck deck) {
