@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.IntStream;
 
 public class Deck {
@@ -18,7 +17,7 @@ public class Deck {
     static final int GREEN_SUNS = 7;
     static final int BROWN_SUNS = 6;
 
-    private ArrayList<Card> deck = new ArrayList<>();
+    private ArrayList<Card> deck;
     private Map<Card.Color, Integer> colorToSuns = new HashMap<Card.Color, Integer>() {{
         put(Card.Color.RED, RED_SUNS);
         put(Card.Color.BLUE, BLUE_SUNS);
@@ -27,38 +26,7 @@ public class Deck {
     }};
 
     public Deck() {
-        for (Card.Color color : Card.Color.values()) {
-            IntStream.range(0, MOONS_PER_COLOR).forEach(i -> 
-                    deck.add(Card.Builder.newInstance()
-                        .setColor(color)
-                        .setSymbol(Card.Symbol.MOON)
-                        .build()));
-
-            IntStream.range(0, KEYS_PER_COLOR).forEach(i -> 
-                    deck.add(Card.Builder.newInstance()
-                        .setColor(color)
-                        .setSymbol(Card.Symbol.KEY)
-                        .build()));
- 
-            IntStream.range(0, DOORS_PER_COLOR).forEach(i -> 
-                    deck.add(Card.Builder.newInstance()
-                        .setColor(color)
-                        .setSymbol(Card.Symbol.DOOR)
-                        .build()));
-
-            IntStream.range(0, colorToSuns.get(color)).forEach(i -> 
-                    deck.add(Card.Builder.newInstance()
-                        .setColor(color)
-                        .setSymbol(Card.Symbol.SUN)
-                        .build()));
-        }
-
-        IntStream.range(0, NIGHTMARE_CARDS).forEach(i -> 
-                deck.add(Card.Builder.newInstance()
-                    .setSymbol(Card.Symbol.NIGHTMARE)
-                    .build()));
-
-        Collections.shuffle(deck);
+        deck = new ArrayList<>();
     }
 
     public Deck(ArrayList<Card> cards) {
@@ -73,15 +41,50 @@ public class Deck {
         return deck.toString();
     }
 
+    public void initialize() {
+        for (Card.Color color : Card.Color.values()) {
+            IntStream.range(0, MOONS_PER_COLOR).forEach(i ->
+                    deck.add(Card.Builder.newInstance()
+                            .setColor(color)
+                            .setSymbol(Card.Symbol.MOON)
+                            .build()));
+
+            IntStream.range(0, KEYS_PER_COLOR).forEach(i ->
+                    deck.add(Card.Builder.newInstance()
+                            .setColor(color)
+                            .setSymbol(Card.Symbol.KEY)
+                            .build()));
+
+            IntStream.range(0, DOORS_PER_COLOR).forEach(i ->
+                    deck.add(Card.Builder.newInstance()
+                            .setColor(color)
+                            .setSymbol(Card.Symbol.DOOR)
+                            .build()));
+
+            IntStream.range(0, colorToSuns.get(color)).forEach(i ->
+                    deck.add(Card.Builder.newInstance()
+                            .setColor(color)
+                            .setSymbol(Card.Symbol.SUN)
+                            .build()));
+        }
+
+        IntStream.range(0, NIGHTMARE_CARDS).forEach(i ->
+                deck.add(Card.Builder.newInstance()
+                        .setSymbol(Card.Symbol.NIGHTMARE)
+                        .build()));
+
+        Collections.shuffle(deck);
+    }
+
     public void shuffle() {
         Collections.shuffle(deck);
     }
 
-    public Optional<Card> drawCard() {
+    public Card drawCard() throws OnirimException {
         if (deck.size() > 0) {
-            return Optional.of(deck.remove(0));
-       }
+            return deck.remove(0);
+        }
 
-       return Optional.empty();
+        throw new OnirimException("Could not draw card because deck has no cards.");
     }
 }
