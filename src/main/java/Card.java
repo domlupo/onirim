@@ -24,7 +24,7 @@ public class Card {
             return new Builder();
         }
 
-        private Builder() {}
+        Builder() {}
 
         public Builder setColor(Color color) {
             this.color = color;

@@ -1,23 +1,6 @@
 class Main {
     public static void main(String[] args)
-    {
-        Deck deck = new Deck();
-        System.out.println(deck.getDeck().size());
-
-        Hand hand = new Hand(deck);
-        System.out.println(hand);
-        System.out.println(deck);
-        System.out.println(deck.getDeck().size());
-
-        System.out.println(hand.hasCard(Card.Color.RED, Card.Symbol.SUN));
-        if (hand.hasCard(Card.Color.RED, Card.Symbol.SUN)) {
-            hand.removeCard(Card.Color.RED, Card.Symbol.SUN);
-            hand.addCard(deck.drawCard().get());
-            System.out.println(deck.getDeck().size());
-        }
-
-        System.out.println(hand);
-   }
+    { }
 
    private void handleDrawnCard(Card card, Hand hand) {
        if (card.getSymbol() == Card.Symbol.SUN 

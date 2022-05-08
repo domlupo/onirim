@@ -4,11 +4,23 @@ import java.util.Random;
 public class Hand {
     private int CARDS_IN_HAND = 5;
 
-    private ArrayList<Card> hand = new ArrayList<>();
+    private ArrayList<Card> hand;
     private Random random = new Random();
 
-    public Hand (Deck deck) {
+    public Hand() {
+        hand = new ArrayList<>();
+    }
 
+    public Hand(Card card) {
+        hand = new ArrayList<>();
+        hand.add(card);
+    }
+
+    public Hand(ArrayList<Card> cards) {
+        hand = new ArrayList<>(cards);
+    }
+
+    public void drawStartingHand(Deck deck) {
         while (hand.size() != 5) {
             int index = random.nextInt(deck.getDeck().size());
 
@@ -43,7 +55,7 @@ public class Hand {
             }
         }
 
-        // TODO throw exception
+        // TODO throw exception and add tests
     }
 
     public boolean hasCard(Card.Color color, Card.Symbol symbol) {
