@@ -1,8 +1,10 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
 
 import java.util.ArrayList;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -177,6 +179,68 @@ class HandTest {
             Hand hand = new Hand(card);
 
             assertFalse(hand.hasCard(checkColor, matchingSymbol));
+        }
+
+        @Nested
+        class drawStartingHand {
+            @Test
+            void deckTooSmallException() {
+                Deck deck = new Deck(new ArrayList<>());
+                int deckSizeBeforeDrawingHand = deck.getDeck().size();
+                Hand hand = new Hand();
+
+                OnirimException thrown = assertThrows(
+                        OnirimException.class,
+                        () -> hand.drawStartingHand(deck),
+                        "Expected drawStartingHand(deck) to throw, but it didn't"
+                );
+
+                assertTrue(hand.getHand().size() == 0);
+                assertTrue(deck.getDeck().size() == deckSizeBeforeDrawingHand);
+                assertTrue(thrown.getMessage().contains("Could not draw " + Hand.STARTING_CARDS_IN_HAND +
+                        " starting cards because deck is too small."));
+            }
+
+            @Test
+            void deckNotEnoughValidStartingCardsException() {
+                Card.Builder invalidStartingCardBuilder = new Card.Builder().setSymbol(Card.Symbol.NIGHTMARE);
+                ArrayList<Card> invalidCards = new ArrayList<>();
+                IntStream.range(0, Hand.STARTING_CARDS_IN_HAND).forEach(i ->
+                        invalidCards.add(invalidStartingCardBuilder.build()));
+
+                Deck deck = new Deck(invalidCards);
+                int deckSizeBeforeDrawingHand = deck.getDeck().size();
+                Hand hand = new Hand();
+
+                OnirimException thrown = assertThrows(
+                        OnirimException.class,
+                        () -> hand.drawStartingHand(deck),
+                        "Expected drawStartingHand(deck) to throw, but it didn't"
+                );
+
+                assertTrue(hand.getHand().size() == 0);
+                assertTrue(deck.getDeck().size() == deckSizeBeforeDrawingHand);
+                assertTrue(thrown.getMessage().contains("Could not draw " + Hand.STARTING_CARDS_IN_HAND +
+                        " starting cards because deck does not have enough valid starting cards."));
+            }
+
+            @Test
+            void drawStartingHand() throws OnirimException {
+                Card.Builder validStartingCardBuilder = new Card.Builder()
+                        .setColor(Card.Color.RED)
+                        .setSymbol(Card.Symbol.SUN);
+                ArrayList<Card> validCards = new ArrayList<>();
+                IntStream.range(0, Hand.STARTING_CARDS_IN_HAND).forEach(i ->
+                        validCards.add(validStartingCardBuilder.build()));
+
+                Deck deck = new Deck(validCards);
+                Hand hand = new Hand();
+                hand.drawStartingHand(deck);
+
+                assertTrue(hand.getHand().size() == Hand.STARTING_CARDS_IN_HAND);
+                assertTrue(deck.getDeck().size() == 0);
+                assertTrue(hand.getHand().containsAll(validCards));
+            }
         }
     }
 }

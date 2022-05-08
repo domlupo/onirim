@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Hand {
-    private int CARDS_IN_HAND = 5;
+    public static int STARTING_CARDS_IN_HAND = 5;
 
     private ArrayList<Card> hand;
     private Random random = new Random();
@@ -20,17 +20,30 @@ public class Hand {
         hand = new ArrayList<>(cards);
     }
 
-    public void drawStartingHand(Deck deck) {
-        while (hand.size() != 5) {
-            int index = random.nextInt(deck.getDeck().size());
-
-            if (validStartingCard(deck.getDeck().get(index))) {
-                hand.add(deck.getDeck().get(index));
-                deck.getDeck().remove(index);
-            }
+    public void drawStartingHand(Deck deck) throws OnirimException {
+        if (deck.getDeck().size() < STARTING_CARDS_IN_HAND) {
+            throw new OnirimException("Could not draw " + STARTING_CARDS_IN_HAND +
+                    " starting cards because deck is too small.");
         }
 
-        deck.shuffle();
+       deck.getDeck().forEach(card -> {
+                   if (validStartingCard(card) && hand.size() < STARTING_CARDS_IN_HAND) {
+                       hand.add(card);
+                   }
+               }
+       );
+
+       if (hand.size() != STARTING_CARDS_IN_HAND) {
+           removeAllCards();
+           throw new OnirimException("Could not draw " + STARTING_CARDS_IN_HAND +
+                   " starting cards because deck does not have enough valid starting cards.");
+       }
+
+       hand.forEach(card -> {
+           deck.getDeck().remove(card);
+       });
+
+       deck.shuffle();
     }
 
     public ArrayList getHand() {
@@ -68,4 +81,9 @@ public class Hand {
                 card.getSymbol() == Card.Symbol.MOON || 
                 card.getSymbol() == Card.Symbol.KEY);
     }
+
+    private void removeAllCards() {
+        hand = new ArrayList<>();
+    }
+
 }
