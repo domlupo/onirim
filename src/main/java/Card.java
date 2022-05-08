@@ -1,6 +1,6 @@
 public class Card {
     public enum Color {
-        RED, BLUE, GREEN, BROWN 
+        RED, BLUE, GREEN,TAN
     }
 
     public enum Symbol {

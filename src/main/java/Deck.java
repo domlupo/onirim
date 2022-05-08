@@ -15,14 +15,14 @@ public class Deck {
     static final int RED_SUNS = 9;
     static final int BLUE_SUNS = 8;
     static final int GREEN_SUNS = 7;
-    static final int BROWN_SUNS = 6;
+    static final int TAN_SUNS = 6;
 
     private ArrayList<Card> deck;
     private Map<Card.Color, Integer> colorToSuns = new HashMap<Card.Color, Integer>() {{
         put(Card.Color.RED, RED_SUNS);
         put(Card.Color.BLUE, BLUE_SUNS);
         put(Card.Color.GREEN, GREEN_SUNS);
-        put(Card.Color.BROWN, BROWN_SUNS);
+        put(Card.Color.TAN, TAN_SUNS);
     }};
 
     public Deck() {
