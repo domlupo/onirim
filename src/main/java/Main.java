@@ -1,11 +1,20 @@
 class Main {
-    public static void main(String[] args)
-    { }
+    public static void main(String[] args) {
+        // get user input
+
+        // play or discard card based on user input
+
+        // check for win
+
+        // draw card
+
+        // handle drawn card
+    }
 
    private void handleDrawnCard(Card card, Hand hand) throws OnirimException {
-       if (card.getSymbol() == Card.Symbol.SUN 
-           || card.getSymbol() == Card.Symbol.MOON
-           || card.getSymbol() == Card.Symbol.KEY) {
+       if (card.getSymbol() == Card.Symbol.SUN ||
+           card.getSymbol() == Card.Symbol.MOON ||
+           card.getSymbol() == Card.Symbol.KEY) {
 
            hand.addCard(card.getCard());
        }
