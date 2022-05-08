@@ -72,11 +72,6 @@ public class Hand {
                 + symbol + " because that card is not in hand.");
     }
 
-    public boolean hasCard(Card.Color color, Card.Symbol symbol) {
-        return hand.stream().anyMatch(card -> 
-                card.getColor().equals(color) && card.getSymbol().equals(symbol));
-    }
-
     private boolean validStartingCard(Card card) {
         return (card.getSymbol() == Card.Symbol.SUN ||
                 card.getSymbol() == Card.Symbol.MOON || 

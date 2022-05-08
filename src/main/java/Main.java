@@ -32,8 +32,8 @@ class Main {
        // place in labyrinth
    }
 
-   private boolean validDiscardCard(Card.Color color, Card.Symbol symbol, Hand hand) {
-       return hand.hasCard(color, symbol);
+   private void  discardCard(Card.Color color, Card.Symbol symbol, Hand hand) throws OnirimException {
+       hand.removeCard(color, symbol);
    }
 
    private void discardCard(Card.Color color, Card.Symbol symbol) {
