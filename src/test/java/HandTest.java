@@ -122,7 +122,7 @@ class HandTest {
             OnirimException thrown = assertThrows(
                     OnirimException.class,
                     () -> hand.removeCard(color, symbol),
-                    "Expected drawStartingHand(deck) to throw, but it didn't"
+                    "Expected removeCard(color, symbol) to throw, but it didn't"
             );
 
             assertTrue(hand.getHand().size() == 0);
