@@ -1,8 +1,6 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-
 import java.util.ArrayList;
 import java.util.stream.IntStream;
 
@@ -51,7 +49,7 @@ class HandTest {
     class removeCard {
 
         @Test
-        void removeOnlyCard() {
+        void removeOnlyCard() throws OnirimException {
             Card card = new Card.Builder()
                     .setColor(Card.Color.RED)
                     .setSymbol(Card.Symbol.SUN)
@@ -64,7 +62,7 @@ class HandTest {
         }
 
         @Test
-        void removeCardByCorrectColor() {
+        void removeCardByCorrectColor() throws OnirimException {
             Card.Color cardOneColor = Card.Color.RED;
             Card.Color cardTwoColor = Card.Color.BLUE;
             Card.Symbol symbol = Card.Symbol.SUN;
@@ -90,7 +88,7 @@ class HandTest {
         }
 
         @Test
-        void removeCardByCorrectSymbol() {
+        void removeCardByCorrectSymbol() throws OnirimException {
             Card.Color color = Card.Color.RED;
             Card.Symbol cardOneSymbol = Card.Symbol.SUN;
             Card.Symbol cardTwoSymbol = Card.Symbol.MOON;
@@ -113,6 +111,23 @@ class HandTest {
             hand.removeCard(color, cardOneSymbol);
             assertTrue(hand.getHand().size() == 1);
             assertTrue(hand.getHand().contains(cardTwo));
+        }
+
+        @Test
+        void removeCardException() {
+            Hand hand = new Hand();
+            Card.Color color = Card.Color.RED;
+            Card.Symbol symbol = Card.Symbol.SUN;
+
+            OnirimException thrown = assertThrows(
+                    OnirimException.class,
+                    () -> hand.removeCard(color, symbol),
+                    "Expected drawStartingHand(deck) to throw, but it didn't"
+            );
+
+            assertTrue(hand.getHand().size() == 0);
+            assertTrue(thrown.getMessage().contains("Could not remove card with color " + color + " and symbol "
+                    + symbol + " because that card is not in hand."));
         }
     }
 
@@ -184,6 +199,24 @@ class HandTest {
         @Nested
         class drawStartingHand {
             @Test
+            void drawStartingHand() throws OnirimException {
+                Card.Builder validStartingCardBuilder = new Card.Builder()
+                        .setColor(Card.Color.RED)
+                        .setSymbol(Card.Symbol.SUN);
+                ArrayList<Card> validCards = new ArrayList<>();
+                IntStream.range(0, Hand.STARTING_CARDS_IN_HAND).forEach(i ->
+                        validCards.add(validStartingCardBuilder.build()));
+
+                Deck deck = new Deck(validCards);
+                Hand hand = new Hand();
+                hand.drawStartingHand(deck);
+
+                assertTrue(hand.getHand().size() == Hand.STARTING_CARDS_IN_HAND);
+                assertTrue(deck.getDeck().size() == 0);
+                assertTrue(hand.getHand().containsAll(validCards));
+            }
+
+            @Test
             void deckTooSmallException() {
                 Deck deck = new Deck(new ArrayList<>());
                 int deckSizeBeforeDrawingHand = deck.getDeck().size();
@@ -222,24 +255,6 @@ class HandTest {
                 assertTrue(deck.getDeck().size() == deckSizeBeforeDrawingHand);
                 assertTrue(thrown.getMessage().contains("Could not draw " + Hand.STARTING_CARDS_IN_HAND +
                         " starting cards because deck does not have enough valid starting cards."));
-            }
-
-            @Test
-            void drawStartingHand() throws OnirimException {
-                Card.Builder validStartingCardBuilder = new Card.Builder()
-                        .setColor(Card.Color.RED)
-                        .setSymbol(Card.Symbol.SUN);
-                ArrayList<Card> validCards = new ArrayList<>();
-                IntStream.range(0, Hand.STARTING_CARDS_IN_HAND).forEach(i ->
-                        validCards.add(validStartingCardBuilder.build()));
-
-                Deck deck = new Deck(validCards);
-                Hand hand = new Hand();
-                hand.drawStartingHand(deck);
-
-                assertTrue(hand.getHand().size() == Hand.STARTING_CARDS_IN_HAND);
-                assertTrue(deck.getDeck().size() == 0);
-                assertTrue(hand.getHand().containsAll(validCards));
             }
         }
     }

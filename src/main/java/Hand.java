@@ -58,17 +58,18 @@ public class Hand {
         hand.add(card);
     }
 
-    public void removeCard(Card.Color color, Card.Symbol symbol) {
+    public void removeCard(Card.Color color, Card.Symbol symbol) throws OnirimException {
         for (int i = 0; i < hand.size(); i++) {
             if (hand.get(i).getColor().equals(color)
                 && hand.get(i).getSymbol().equals(symbol)) {
 
                 hand.remove(i);
-                break;
+                return;
             }
         }
 
-        // TODO throw exception and add tests
+        throw new OnirimException("Could not remove card with color " + color + " and symbol "
+                + symbol + " because that card is not in hand.");
     }
 
     public boolean hasCard(Card.Color color, Card.Symbol symbol) {
