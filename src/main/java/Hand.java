@@ -65,13 +65,12 @@ public class Hand {
         hand.add(card);
     }
 
-    public void removeCard(Card.Color color, Card.Symbol symbol) throws OnirimException {
+    public Card removeCard(Card.Color color, Card.Symbol symbol) throws OnirimException {
         for (int i = 0; i < hand.size(); i++) {
             if (hand.get(i).getColor().equals(color)
                 && hand.get(i).getSymbol().equals(symbol)) {
 
-                hand.remove(i);
-                return;
+                return hand.remove(i);
             }
         }
 
