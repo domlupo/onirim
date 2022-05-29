@@ -1,11 +1,11 @@
 public class Game {
-    private static Input i;
-    private static Deck deck;
-    private static Hand hand;
-    private static Labyrinth labyrinth;
-    private static Doors doors;
-    private static boolean won;
-    private static boolean lost;
+    private Input i;
+    private Deck deck;
+    private Hand hand;
+    private Labyrinth labyrinth;
+    private Doors doors;
+    private boolean won;
+    private boolean lost;
 
     public Game() {
         i = new Input();
@@ -27,11 +27,11 @@ public class Game {
             processInput();
             won = doors.doorsComplete();
             lost = false; // check lose
-            processDraw();
+            processDraws();
         }
     }
 
-    public static void processInput() throws OnirimException {
+    public void processInput() throws OnirimException {
         String input = i.getNormalInput();
         Input.Move move = i.translateMove(input);
         Card.Color color = i.translateColor(input);
@@ -48,7 +48,7 @@ public class Game {
         throw new OnirimException("Cannot process input.");
     }
 
-    public static void processNightmareInput() throws OnirimException {
+    public void processNightmareInput() throws OnirimException {
         String input = i.getNightmareInput();
         Input.Move move = i.translateMove(input);
 
@@ -74,7 +74,13 @@ public class Game {
         throw new OnirimException("Cannot process nightmare input.");
     }
 
-    private static void processDraw() throws OnirimException {
+    private void processDraws() throws OnirimException {
+        while (hand.getHand().size() != Hand.MAX_CARDS_IN_HAND) {
+            processDraw();
+        }
+    }
+
+    private void processDraw() throws OnirimException {
         Card card = deck.drawCard();
 
         if (card.getSymbol() == Card.Symbol.SUN ||
@@ -92,7 +98,8 @@ public class Game {
         // throw exception
     }
 
-    private static void playCard(Card.Color color, Card.Symbol symbol) throws OnirimException {
+
+    private void playCard(Card.Color color, Card.Symbol symbol) throws OnirimException {
         Card card;
 
         try {
