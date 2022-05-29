@@ -19,7 +19,7 @@ public class Game {
 
     void play() throws OnirimException {
         deck.initialize();
-        hand.drawStartingHand(deck);
+        hand.drawNewHand(deck);
 
         while (!(won || lost)) {
             System.out.println(hand);

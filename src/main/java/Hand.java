@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Hand {
-    public static int STARTING_CARDS_IN_HAND = 5;
     public static int MAX_CARDS_IN_HAND = 5;
 
     private ArrayList<Card> hand;
@@ -21,23 +20,23 @@ public class Hand {
         hand = new ArrayList<>(cards);
     }
 
-    public void drawStartingHand(Deck deck) throws OnirimException {
-        if (deck.getDeck().size() < STARTING_CARDS_IN_HAND) {
-            throw new OnirimException("Could not draw " + STARTING_CARDS_IN_HAND +
-                    " starting cards because deck is too small.");
+    public void drawNewHand(Deck deck) throws OnirimException {
+        if (deck.getDeck().size() < MAX_CARDS_IN_HAND) {
+            throw new OnirimException("Could not draw " + MAX_CARDS_IN_HAND +
+                    " cards because deck is too small.");
         }
 
        deck.getDeck().forEach(card -> {
-                   if (validStartingCard(card) && hand.size() < STARTING_CARDS_IN_HAND) {
+                   if (validHandCard(card) && hand.size() < MAX_CARDS_IN_HAND) {
                        hand.add(card);
                    }
                }
        );
 
-       if (hand.size() != STARTING_CARDS_IN_HAND) {
+       if (hand.size() != MAX_CARDS_IN_HAND) {
            removeAllCards();
-           throw new OnirimException("Could not draw " + STARTING_CARDS_IN_HAND +
-                   " starting cards because deck does not have enough valid starting cards.");
+           throw new OnirimException("Could not draw " + MAX_CARDS_IN_HAND +
+                   " cards because deck does not have enough valid starting cards.");
        }
 
        hand.forEach(card -> {
@@ -78,7 +77,7 @@ public class Hand {
                 + symbol + " because that card is not in hand.");
     }
 
-    private boolean validStartingCard(Card card) {
+    private boolean validHandCard(Card card) {
         return (card.getSymbol() == Card.Symbol.SUN ||
                 card.getSymbol() == Card.Symbol.MOON || 
                 card.getSymbol() == Card.Symbol.KEY);
