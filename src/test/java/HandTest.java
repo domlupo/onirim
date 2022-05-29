@@ -71,6 +71,34 @@ class HandTest {
     }
 
     @Nested
+    class hasCard {
+        @Test
+        void hasCard() throws OnirimException {
+            Card.Color color = Card.Color.RED;
+            Card.Symbol symbol = Card.Symbol.SUN;
+
+            Hand hand = new Hand();
+            Card cardOne = new Card.Builder()
+                    .setColor(color)
+                    .setSymbol(symbol)
+                    .build();
+
+            assertTrue(hand.getHand().size() == 0);
+            hand.addCard(cardOne);
+            assertTrue(hand.getHand().size() == 1);
+            assertTrue(hand.hasCard(color, symbol));
+        }
+
+        @Test
+        void notHasCard() throws OnirimException {
+            Hand hand = new Hand();
+
+            assertTrue(hand.getHand().size() == 0);
+            assertFalse(hand.hasCard(Card.Color.RED, Card.Symbol.SUN));
+        }
+    }
+
+    @Nested
     class removeCard {
 
         @Test

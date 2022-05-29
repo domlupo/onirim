@@ -77,6 +77,18 @@ public class Hand {
                 + symbol + " because that card is not in hand.");
     }
 
+    public boolean hasCard(Card.Color color, Card.Symbol symbol) {
+        for (int i = 0; i < hand.size(); i++) {
+            if (hand.get(i).getColor().equals(color)
+                    && hand.get(i).getSymbol().equals(symbol)) {
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private boolean validHandCard(Card card) {
         return (card.getSymbol() == Card.Symbol.SUN ||
                 card.getSymbol() == Card.Symbol.MOON || 
