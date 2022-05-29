@@ -4,6 +4,7 @@ public class Game {
     private Hand hand;
     private Labyrinth labyrinth;
     private Doors doors;
+    private Limbo limbo;
     private boolean won;
     private boolean lost;
 
@@ -13,6 +14,7 @@ public class Game {
         hand = new Hand();
         labyrinth = new Labyrinth();
         doors = new Doors();
+        limbo = new Limbo();
         won = false;
         lost = false;
     }
@@ -26,7 +28,7 @@ public class Game {
             System.out.println(labyrinth);
             processInput();
             won = doors.doorsComplete();
-            lost = false; // check lose
+            lost = false; // check lost
             processDraws();
         }
     }
