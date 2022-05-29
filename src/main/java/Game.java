@@ -89,15 +89,30 @@ public class Game {
 
             hand.addCard(card.getCard());
             return;
+        } else if (card.getSymbol() == Card.Symbol.DOOR) {
+            // process door
+        } else if (card.getSymbol() == Card.Symbol.NIGHTMARE) {
+            // process nightmare
         }
 
-        // else if card is door
-
-        // else if card is nightmare
-
-        // throw exception
+        throw new OnirimException("Cannot process draw.");
     }
 
+    private void processDoorCard() {
+        // check if hand has key with matching color
+
+        // ask user if he wants to open door
+
+        // open door or limbo door
+    }
+
+    private void processNightmareCard() {
+        // get nightmare input
+
+        // check if nightmare input is valid
+
+        // perform nightmare input
+    }
 
     private void playCard(Card.Color color, Card.Symbol symbol) throws OnirimException {
         Card card;
