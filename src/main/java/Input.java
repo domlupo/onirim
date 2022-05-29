@@ -6,7 +6,6 @@ public class Input {
     int MOVE_INDEX = 0;
     int COLOR_INDEX = 1;
     int SYMBOL_INDEX = 2;
-
     public enum INPUT {
         MOVE, COLOR, SYMBOL
     }
@@ -15,7 +14,7 @@ public class Input {
     }
 
     Scanner scanner = new Scanner(System.in);
-    private ArrayList<String> validInputs = new ArrayList<>(Arrays.asList(
+    private ArrayList<String> validNormalInputs = new ArrayList<>(Arrays.asList(
             "prs", "prm", "prk", // play red
             "pbs", "pbm", "pbk", // play blue
             "pgs", "pgm", "pgk", // play green
@@ -23,17 +22,31 @@ public class Input {
             "drs", "drm", "drk", // discard red
             "dbs", "dbm", "dbk", // discard blue
             "dgs", "dgm", "dgk", // discard green
-            "dts", "dtm", "dtk", // discard tan
+            "dts", "dtm", "dtk"  // discard tan
+    ));
+
+    private ArrayList<String> validNightmareInputs = new ArrayList<>(Arrays.asList(
+            "drk", "dbk", "dgk", "dtk", // discard key
             "lrd", "lbd", "lgd", "ltd", // limbo door
-            "D", "H" // discard hand, deck
+            "D", "H" // discard deck,hand
     ));
 
     public Input() { }
 
-    public String getInput() {
+    public String getNormalInput() {
         String input = null;
 
-        while (!validInputs.contains(input)) {
+        while (!validNormalInputs.contains(input)) {
+            input = scanner.next();
+        }
+
+        return input;
+    }
+
+    public String getNightmareInput() {
+        String input = null;
+
+        while (!validNightmareInputs.contains(input)) {
             input = scanner.next();
         }
 
