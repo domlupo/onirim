@@ -42,6 +42,10 @@ public class Doors {
         return true;
     }
 
+    public String toString() {
+        return doors.toString();
+    }
+
     private int getDoorsWithMatchingColor(Card.Color color) {
         int doorsWithMatchingColor = 0;
         for (int i = 0; i < doors.size(); i++) {

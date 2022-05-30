@@ -10,7 +10,7 @@ public class Input {
         MOVE, COLOR, SYMBOL
     }
     public enum Move {
-        PLAY, DISCARD, LIMBO, DISCARD_HAND, DISCARD_DECK
+        PLAY, DISCARD, OPEN, LIMBO, DISCARD_HAND, DISCARD_DECK
     }
 
     Scanner scanner = new Scanner(System.in);
@@ -29,6 +29,10 @@ public class Input {
             "drk", "dbk", "dgk", "dtk", // discard key
             "lrd", "lbd", "lgd", "ltd", // limbo door
             "D", "H" // discard deck,hand
+    ));
+
+    private ArrayList<String> validDoorInputs = new ArrayList<>(Arrays.asList(
+            "o", "l"
     ));
 
     public Input() { }
@@ -53,6 +57,16 @@ public class Input {
         return input;
     }
 
+    public String getDoorInput() {
+        String input = null;
+
+        while (!validDoorInputs.contains(input)) {
+            input = scanner.next();
+        }
+
+        return input;
+    }
+
     public Move translateMove(String input) throws OnirimException {
         checkIndexExists(input, MOVE_INDEX, INPUT.MOVE);
         Character moveChar = input.charAt(MOVE_INDEX);
@@ -61,6 +75,8 @@ public class Input {
             return Move.PLAY;
         } else if (moveChar.equals('d')) {
             return Move.DISCARD;
+        } else if (moveChar.equals('o')) {
+            return Move.OPEN;
         } else if (moveChar.equals('l')) {
             return Move.LIMBO;
         } else if (moveChar.equals('H')){

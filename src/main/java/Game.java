@@ -24,8 +24,9 @@ public class Game {
         hand.drawNewHand(deck);
 
         while (!(won || lost)) {
-            System.out.println(hand);
-            System.out.println(labyrinth);
+            System.out.println(String.format("Hand: %s", hand));
+            System.out.println(String.format("Labyrinth: %s", labyrinth));
+            System.out.println(String.format("Doors: %s", doors));
             processInput();
             won = doors.doorsComplete();
             lost = false; // check lost
@@ -34,6 +35,7 @@ public class Game {
     }
 
     public void processInput() throws OnirimException {
+        System.out.println("Input move");
         String input = i.getNormalInput();
         Input.Move move = i.translateMove(input);
         Card.Color color = i.translateColor(input);
@@ -71,9 +73,9 @@ public class Game {
         } else if (move == Input.Move.LIMBO) {
             // limbo card
             return;
+        } else {
+            throw new OnirimException("Cannot process nightmare input.");
         }
-
-        throw new OnirimException("Cannot process nightmare input.");
     }
 
     private void processDraws() throws OnirimException {
@@ -90,22 +92,35 @@ public class Game {
                 card.getSymbol() == Card.Symbol.KEY) {
 
             hand.addCard(card.getCard());
-            return;
         } else if (card.getSymbol() == Card.Symbol.DOOR) {
-            // process door
+            processDoorCard(card);
         } else if (card.getSymbol() == Card.Symbol.NIGHTMARE) {
             // process nightmare
+        } else {
+            throw new OnirimException("Cannot process draw.");
         }
-
-        throw new OnirimException("Cannot process draw.");
     }
 
-    private void processDoorCard() {
-        // check if hand has key with matching color
+    private void processDoorCard(Card card) throws OnirimException {
+        if (card.getSymbol() != Card.Symbol.DOOR) {
+            throw new OnirimException("Cannot process card since it is not a door.");
+        }
 
-        // ask user if he wants to open door
+        if (!hand.hasCard(card.getColor(), Card.Symbol.KEY)) {
+            // add door to limbo
+        }
 
-        // open door or limbo door
+        System.out.println(String.format("Open or Limbo %s door.", card.getColor()));
+        String input = i.getDoorInput();
+        Input.Move move = i.translateMove(input);
+
+        if (move == Input.Move.OPEN) {
+            doors.addDoor(card);
+        } else if (move == Input.Move.LIMBO) {
+            // limbo door
+        } else {
+            throw new OnirimException("Cannot process door card.");
+        }
     }
 
     private void processNightmareCard() {
