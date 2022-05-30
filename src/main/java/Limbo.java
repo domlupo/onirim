@@ -17,6 +17,10 @@ public class Limbo {
         limbo = new ArrayList<>(cards);
     }
 
+    public ArrayList getLimbo() {
+        return limbo;
+    }
+
     public void addCard(Card card) throws OnirimException {
         if (card.getSymbol() == Card.Symbol.DOOR || card.getSymbol() == Card.Symbol.NIGHTMARE) {
             limbo.add(card);

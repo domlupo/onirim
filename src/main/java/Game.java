@@ -27,11 +27,11 @@ public class Game {
             System.out.println(String.format("Hand: %s", hand));
             System.out.println(String.format("Labyrinth: %s", labyrinth));
             System.out.println(String.format("Doors: %s", doors));
-            System.out.println(String.format("Limbo: %s", limbo));
             processInput();
             won = doors.doorsComplete();
             lost = false; // check lost
             processDraws();
+            processLimbo();
         }
     }
 
@@ -131,6 +131,13 @@ public class Game {
         // check if nightmare input is valid
 
         // perform nightmare input
+    }
+
+    private void processLimbo() {
+        if (!limbo.getLimbo().isEmpty()) {
+            deck.shuffle(labyrinth.getLabyrinth());
+            limbo.getLimbo().clear();
+        }
     }
 
     private void playCard(Card.Color color, Card.Symbol symbol) throws OnirimException {

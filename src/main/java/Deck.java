@@ -80,6 +80,11 @@ public class Deck {
         Collections.shuffle(deck);
     }
 
+    public void shuffle(ArrayList<Card> cards) {
+        deck.addAll(cards);
+        Collections.shuffle(deck);
+    }
+
     public Card drawCard() throws OnirimException {
         if (deck.size() > 0) {
             return deck.remove(0);
