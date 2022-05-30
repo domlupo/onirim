@@ -8,6 +8,7 @@ public class Game {
     private boolean won;
     private boolean lost;
     private int NIGHTMARE_CARD_DISCARD = 5;
+    private int LABYRINTH_COLOR_STREAK_FOR_DOOR = 3;
 
     public Game() {
         i = new Input();
@@ -31,6 +32,7 @@ public class Game {
             System.out.println(String.format("Deck: %s", deck));
             System.out.println(deck.getDeck().size());
             processInput();
+            processLabyrinth();
             won = doors.doorsComplete();
             lost = false; // check lost
             processDraws();
@@ -51,6 +53,25 @@ public class Game {
             discardCard(color, symbol, hand);
         } else {
             throw new OnirimException("Cannot process input.");
+        }
+    }
+
+    public void processLabyrinth() throws OnirimException {
+        if (labyrinth.getLabyrinth().isEmpty()) {
+            return;
+        }
+
+        Card.Color lastLabyrinthCardColor = labyrinth.getLastCardColor();
+
+        if (doors.doorsCompleteForColor(lastLabyrinthCardColor)) {
+            return;
+        }
+
+        if (labyrinth.getCardColorStreakCounter() == LABYRINTH_COLOR_STREAK_FOR_DOOR) {
+            labyrinth.setCardColorStreakCounter(0);
+            Card door = deck.removeCard(lastLabyrinthCardColor, Card.Symbol.DOOR);
+            doors.addDoor(door);
+            deck.shuffle();
         }
     }
 

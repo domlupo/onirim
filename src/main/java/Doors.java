@@ -42,11 +42,19 @@ public class Doors {
 
     public boolean doorsComplete() {
         for (Card.Color color : Card.Color.values()) {
-            int doorsWithMatchingColor = getDoorsWithMatchingColor(color);
-
-            if (doorsWithMatchingColor != 2) {
+            if (!doorsCompleteForColor(color)) {
                 return false;
             }
+        }
+
+        return true;
+    }
+
+    public boolean doorsCompleteForColor(Card.Color color) {
+        int doorsWithMatchingColor = getDoorsWithMatchingColor(color);
+
+        if (doorsWithMatchingColor != 2) {
+            return false;
         }
 
         return true;

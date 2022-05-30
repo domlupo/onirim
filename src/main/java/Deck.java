@@ -92,4 +92,18 @@ public class Deck {
 
         throw new OnirimException("Could not draw card because deck has no cards.");
     }
+
+    public Card removeCard(Card.Color color, Card.Symbol symbol) throws OnirimException {
+        for (int i = 0; i < deck.size(); i++) {
+            if (deck.get(i).getColor() != null
+                    && deck.get(i).getColor().equals(color)
+                    && deck.get(i).getSymbol().equals(symbol)) {
+
+                return deck.remove(i);
+            }
+        }
+
+        throw new OnirimException("Could not remove card with color " + color + " and symbol "
+                + symbol + " because that card is not in deck.");
+    }
 }
