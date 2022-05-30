@@ -27,6 +27,7 @@ public class Game {
             System.out.println(String.format("Hand: %s", hand));
             System.out.println(String.format("Labyrinth: %s", labyrinth));
             System.out.println(String.format("Doors: %s", doors));
+            System.out.println(String.format("Limbo: %s", limbo));
             processInput();
             won = doors.doorsComplete();
             lost = false; // check lost
@@ -107,7 +108,8 @@ public class Game {
         }
 
         if (!hand.hasCard(card.getColor(), Card.Symbol.KEY)) {
-            // add door to limbo
+            limbo.addCard(card);
+            return;
         }
 
         System.out.println(String.format("Open or Limbo %s door.", card.getColor()));
@@ -117,7 +119,7 @@ public class Game {
         if (move == Input.Move.OPEN) {
             doors.addDoor(card);
         } else if (move == Input.Move.LIMBO) {
-            // limbo door
+            limbo.addCard(card);
         } else {
             throw new OnirimException("Cannot process door card.");
         }
