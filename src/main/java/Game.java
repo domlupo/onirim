@@ -7,6 +7,7 @@ public class Game {
     private Limbo limbo;
     private boolean won;
     private boolean lost;
+    private int NIGHTMARE_CARD_DISCARD = 5;
 
     public Game() {
         i = new Input();
@@ -27,6 +28,8 @@ public class Game {
             System.out.println(String.format("Hand: %s", hand));
             System.out.println(String.format("Labyrinth: %s", labyrinth));
             System.out.println(String.format("Doors: %s", doors));
+            System.out.println(String.format("Deck: %s", deck));
+            System.out.println(deck.getDeck().size());
             processInput();
             won = doors.doorsComplete();
             lost = false; // check lost
@@ -44,36 +47,33 @@ public class Game {
 
         if (move == Input.Move.PLAY) {
             playCard(color, symbol);
-            return;
         } else if (move == Input.Move.DISCARD) {
             discardCard(color, symbol, hand);
-            return;
+        } else {
+            throw new OnirimException("Cannot process input.");
         }
-
-        throw new OnirimException("Cannot process input.");
     }
 
-    public void processNightmareInput() throws OnirimException {
+    public void processNightmareCard() throws OnirimException {
+        System.out.println("Resolve nightmare card");
         String input = i.getNightmareInput();
         Input.Move move = i.translateMove(input);
 
         if (move == Input.Move.DISCARD_DECK) {
-            // discard deck
+            discardFromDeckToResolveNightmareCard();
             return;
         } else if (move == Input.Move.DISCARD_HAND) {
-            // discard hand
+            discardHandToResolveNightmareCard();
             return;
         }
 
         Card.Color color = i.translateColor(input);
         Card.Symbol symbol = i.translateSymbol(input);
 
-        if (move == Input.Move.DISCARD) {
+        if (move == Input.Move.DISCARD && symbol == Card.Symbol.KEY) {
             discardCard(color, symbol, hand);
-            return;
         } else if (move == Input.Move.LIMBO) {
-            // limbo card
-            return;
+            // limbo open door card
         } else {
             throw new OnirimException("Cannot process nightmare input.");
         }
@@ -88,15 +88,12 @@ public class Game {
     private void processDraw() throws OnirimException {
         Card card = deck.drawCard();
 
-        if (card.getSymbol() == Card.Symbol.SUN ||
-                card.getSymbol() == Card.Symbol.MOON ||
-                card.getSymbol() == Card.Symbol.KEY) {
-
+        if (cardIsSunMoonOrKey(card)) {
             hand.addCard(card.getCard());
         } else if (card.getSymbol() == Card.Symbol.DOOR) {
             processDoorCard(card);
         } else if (card.getSymbol() == Card.Symbol.NIGHTMARE) {
-            // process nightmare
+            processNightmareCard();
         } else {
             throw new OnirimException("Cannot process draw.");
         }
@@ -125,17 +122,9 @@ public class Game {
         }
     }
 
-    private void processNightmareCard() {
-        // get nightmare input
-
-        // check if nightmare input is valid
-
-        // perform nightmare input
-    }
-
     private void processLimbo() {
         if (!limbo.getLimbo().isEmpty()) {
-            deck.shuffle(labyrinth.getLabyrinth());
+            deck.shuffle(limbo.getLimbo());
             limbo.getLimbo().clear();
         }
     }
@@ -159,5 +148,44 @@ public class Game {
 
     private static void discardCard(Card.Color color, Card.Symbol symbol, Hand hand) throws OnirimException {
         hand.removeCard(color, symbol);
+    }
+
+    private void discardHandToResolveNightmareCard() throws OnirimException {
+        hand.getHand().clear();
+        fillHandWithSunMoonAndKey();
+    }
+
+    private void fillHandWithSunMoonAndKey() throws OnirimException {
+        while (hand.getHand().size() != Hand.MAX_CARDS_IN_HAND) {
+            Card card = deck.drawCard();
+            if (cardIsSunMoonOrKey(card)) {
+                hand.addCard(card);
+            } else {
+                limbo.addCard(card);
+            }
+        }
+    }
+
+    private void discardFromDeckToResolveNightmareCard() throws OnirimException {
+        int i = 0;
+        while (i < NIGHTMARE_CARD_DISCARD) {
+            Card card = deck.drawCard();
+
+            if (cardIsSunMoonOrKey(card)) {
+                i += 1;
+            } else {
+                limbo.addCard(card);
+            }
+        }
+    }
+
+    boolean cardIsSunMoonOrKey(Card card) {
+        if (card.getSymbol() == Card.Symbol.SUN ||
+                card.getSymbol() == Card.Symbol.MOON ||
+                card.getSymbol() == Card.Symbol.KEY) {
+            return  true;
+        }
+
+        return  false;
     }
 }
