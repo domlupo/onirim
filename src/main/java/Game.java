@@ -73,7 +73,8 @@ public class Game {
         if (move == Input.Move.DISCARD && symbol == Card.Symbol.KEY) {
             discardCard(color, symbol, hand);
         } else if (move == Input.Move.LIMBO) {
-            // limbo open door card
+            Card limboDoor = doors.removeDoor(color);
+            limbo.addCard(limboDoor);
         } else {
             throw new OnirimException("Cannot process nightmare input.");
         }
@@ -114,6 +115,7 @@ public class Game {
         Input.Move move = i.translateMove(input);
 
         if (move == Input.Move.OPEN) {
+            hand.removeCard(card.getColor(), Card.Symbol.KEY);
             doors.addDoor(card);
         } else if (move == Input.Move.LIMBO) {
             limbo.addCard(card);

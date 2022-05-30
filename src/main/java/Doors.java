@@ -30,6 +30,16 @@ public class Doors {
         doors.add(card);
     }
 
+    public Card removeDoor(Card.Color color) throws OnirimException {
+        for (int i = 0; i < doors.size(); i++) {
+            if (doors.get(i).getColor().equals(color)) {
+                return doors.remove(i);
+            }
+        }
+
+        throw new OnirimException("Could not remove door with color " + color + " because no doors of that color are open.");
+    }
+
     public boolean doorsComplete() {
         for (Card.Color color : Card.Color.values()) {
             int doorsWithMatchingColor = getDoorsWithMatchingColor(color);
