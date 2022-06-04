@@ -93,6 +93,18 @@ public class Deck {
         throw new OnirimException("Could not draw card because deck has no cards.");
     }
 
+    public void addCard(Card card) {
+        deck.add(0, card);
+    }
+
+    public void removeCard(int index) throws OnirimException {
+        if (deck.size() > index ) {
+            deck.remove(index);
+        }
+
+        throw new OnirimException("Could not remove card because index does not exist.");
+    }
+
     public Card removeCard(Card.Color color, Card.Symbol symbol) throws OnirimException {
         for (int i = 0; i < deck.size(); i++) {
             if (deck.get(i).getColor() != null

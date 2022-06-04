@@ -1,3 +1,4 @@
+
 public class Game {
     private Input i;
     private Deck deck;
@@ -169,8 +170,34 @@ public class Game {
         }
     }
 
-    private static void discardCard(Card.Color color, Card.Symbol symbol, Hand hand) throws OnirimException {
+    private void discardCard(Card.Color color, Card.Symbol symbol, Hand hand) throws OnirimException {
         hand.removeCard(color, symbol);
+        if (symbol == Card.Symbol.KEY) {
+            processKeyDiscard();
+        }
+    }
+
+    private void processKeyDiscard() throws OnirimException {
+        if (deck.getDeck().isEmpty()) {
+            return;
+        } else if (deck.getDeck().size() == 1) {
+            deck.removeCard(0);
+            return;
+        }
+
+        // draw from deck till deck empty or has 5 cards in container
+
+        // show 2-5 cards
+
+        // determine valid input from 2-5 cards
+
+        // get input for 2-5 cards
+
+        // rearrange 1-4 cards based on input
+
+        // discard 1
+
+        // add 4 cards back to deck in right order
     }
 
     private void discardHandToResolveNightmareCard() throws OnirimException {
