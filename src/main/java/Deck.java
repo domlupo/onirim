@@ -107,7 +107,6 @@ public class Deck {
             }
         }
 
-        throw new OnirimException("Could not remove card with color " + color + " and symbol "
-                + symbol + " because that card is not in deck.");
+        return null;
     }
 }
