@@ -16,17 +16,6 @@ public class Doors {
     }
 
     public void addDoor(Card card) throws OnirimException {
-        if (card.getSymbol() != Card.Symbol.DOOR) {
-            throw new OnirimException("Could not add door because card is a " + card.getSymbol() + " symbol.");
-        }
-
-        int doorsWithMatchingColor = getDoorsWithMatchingColor(card.getColor());
-
-        if (doorsWithMatchingColor >= Deck.DOORS_PER_COLOR) {
-            throw new OnirimException("Could not add door because " + Deck.DOORS_PER_COLOR + " " + card.getColor()
-                    + " doors are already completed.");
-        }
-
         doors.add(card);
     }
 
@@ -37,7 +26,7 @@ public class Doors {
             }
         }
 
-        throw new OnirimException("Could not remove door with color " + color + " because no doors of that color are open.");
+        return null;
     }
 
     public boolean doorsComplete() {
