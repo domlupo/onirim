@@ -38,20 +38,5 @@ class DeckTest {
             assertTrue(deck.getDeck().size() == 0);
             assertTrue(drawnCard == card);
         }
-
-        @Test
-        void drawCardException() {
-            Deck deck = new Deck();
-
-            assertTrue(deck.getDeck().size() == 0);
-            OnirimException thrown = assertThrows(
-                    OnirimException.class,
-                    () -> deck.drawCard(),
-                    "Expected addCard(card) to throw, but it didn't"
-            );
-
-            assertTrue(thrown.getMessage().contains("Could not draw card because deck has no cards."));
-        }
-
     }
 }

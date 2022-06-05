@@ -103,7 +103,7 @@ public class Game {
     }
 
     private void processDraws() throws OnirimException {
-        while (hand.getHand().size() != Hand.MAX_CARDS_IN_HAND) {
+        while (hand.getHand().size() != Hand.MAX_CARDS_IN_HAND && !deck.getDeck().isEmpty()) {
             processDraw();
         }
     }
@@ -206,7 +206,7 @@ public class Game {
     }
 
     private void fillHandWithSunMoonAndKey() throws OnirimException {
-        while (hand.getHand().size() != Hand.MAX_CARDS_IN_HAND) {
+        while (hand.getHand().size() != Hand.MAX_CARDS_IN_HAND && !deck.getDeck().isEmpty()) {
             Card card = deck.drawCard();
             if (cardIsSunMoonOrKey(card)) {
                 hand.addCard(card);
@@ -218,7 +218,7 @@ public class Game {
 
     private void discardFromDeckToResolveNightmareCard() throws OnirimException {
         int i = 0;
-        while (i < NIGHTMARE_CARD_DISCARD) {
+        while (i < NIGHTMARE_CARD_DISCARD && !deck.getDeck().isEmpty()) {
             Card card = deck.drawCard();
 
             if (cardIsSunMoonOrKey(card)) {
